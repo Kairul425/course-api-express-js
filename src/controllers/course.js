@@ -46,14 +46,14 @@ const getCourseById = async (req, res) => {
 };
 
 const createNewCourse = async (req, res) => {
-  const { nameCourse, categoryId } = req.body;
+  const { name, categoryId } = req.body;
   const image = req.file.filename;
   const url = `${req.protocol}://${req.get("host")}/images/${image}`;
 
   try {
     await prisma.course.create({
       data: {
-        nameCourse,
+        name,
         image,
         imageUrl: url,
         categoryId: parseInt(categoryId),
@@ -86,14 +86,14 @@ const updateCourse = async (req, res) => {
       const filePath = `./public/images/${course.image}`;
       fs.unlinkSync(filePath);
 
-      const { nameCourse, categoryId } = req.body;
+      const { name, categoryId } = req.body;
       const image = req.file.filename;
       const url = `${req.protocol}://${req.get("host")}/images/${image}`;
 
       await prisma.course.update({
         where: { id: parseInt(id) },
         data: {
-          nameCourse,
+          name,
           image,
           imageUrl: url,
           categoryId: parseInt(categoryId),
@@ -102,11 +102,11 @@ const updateCourse = async (req, res) => {
 
       res.status(201).json({ message: "course update success" });
     } else {
-      const { nameCourse, categoryId } = req.body;
+      const { name, categoryId } = req.body;
 
       await prisma.course.update({
         where: { id: parseInt(id) },
-        data: { nameCourse, categoryId: parseInt(categoryId) },
+        data: { name, categoryId: parseInt(categoryId) },
       });
 
       res.status(201).json({ message: "course update success" });

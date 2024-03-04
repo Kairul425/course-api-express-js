@@ -23,7 +23,7 @@ model CourseCategory {
 
 model Course {
   id           Int @id @default(autoincrement())
-  nameCourse   String @db.VarChar(50) 
+  name         String @db.VarChar(50) 
   image        String
   imageUrl     String 
   category     CourseCategory @relation(fields: [categoryId], references: [id])  

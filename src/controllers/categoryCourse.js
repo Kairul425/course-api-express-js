@@ -6,7 +6,7 @@ const prisma = new PrismaClient();
 const getAllCategory = async (req, res) => {
   try {
     const categories = await prisma.courseCategory.findMany({
-      include: { courses: { select: { nameCourse } } },
+      include: { courses: { select: { name: true } } },
     });
 
     res.status(200).json({
@@ -26,6 +26,7 @@ const getCategoryById = async (req, res) => {
   try {
     const category = await prisma.courseCategory.findFirst({
       where: { id: parseInt(id) },
+      include: { courses: { select: { name: true } } },
     });
 
     if (!category) {
